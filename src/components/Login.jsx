@@ -8,15 +8,16 @@ function Login({ setAuth }) {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Set your girlfriend's credentials here
-  const CREDENTIALS = {
-    username: 'DumbDoremon',
-    password: 'DvGn1408'
-  };
+  // Allowed login credentials
+  const CREDENTIALS = [
+    { username: 'DumbDoremon', password: 'DvGn1408' },
+    { username: 'Gargi', password: '3008' }
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
+    const valid = CREDENTIALS.some(c => c.username === username && c.password === password);
+    if (valid) {
       setAuth(true);
       navigate('/home');
     } else {
