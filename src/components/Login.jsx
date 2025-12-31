@@ -62,7 +62,6 @@ function Login({ setAuth }) {
             Enter 💖
           </button>
         </form>
-        <p className="hint">Hint: Username: mylove | Password: newyear2026</p>
       </div>
     </div>
   );
