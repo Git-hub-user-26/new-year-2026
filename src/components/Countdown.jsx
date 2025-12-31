@@ -12,7 +12,7 @@ function Countdown() {
   const videoRef = useRef(null);
 
   // YOUR VIDEO URL HERE
-  const VIDEO_URL = 'https://your-video-link-here.mp4';
+  const VIDEO_URL = '/media/your-romantic-video.mp4';
 
   useEffect(() => {
     const calculateTimeLeft = () => {
