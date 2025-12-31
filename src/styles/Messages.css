@@ -1,0 +1,85 @@
+.messages-container {
+  min-height: 100vh;
+  width: 100vw;
+  background: 
+    linear-gradient(rgba(168,237,234,0.8), rgba(254,214,227,0.7)),
+    url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.messages-header {
+  text-align: center;
+  color: #333;
+  margin-bottom: 50px;
+}
+
+.messages-header h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+  color: #f5576c;
+}
+
+.messages-header p {
+  font-size: 20px;
+  color: #666;
+}
+
+.messages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.message-card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.message-icon {
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.message-card h3 {
+  color: #f5576c;
+  font-size: 24px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.message-card p {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: center;
+}

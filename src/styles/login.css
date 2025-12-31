@@ -1,0 +1,201 @@
+.login-container {
+  min-height: 100vh;
+  width: 100vw;
+  background: 
+    linear-gradient(rgba(240,147,251,0.9), rgba(245,87,108,0.8)),
+    url('https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Keep all your existing heart animations and styles */
+
+/* Optional: remove any body background clash */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #000; /* will be covered by page containers anyway */
+}
+
+/* Floating hearts background */
+.hearts-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.heart {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: rotate(45deg);
+  animation: float 6s infinite ease-in-out;
+}
+
+.heart::before,
+.heart::after {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+.heart::before {
+  top: -25px;
+  left: 0;
+}
+
+.heart::after {
+  top: 0;
+  left: 25px;
+}
+
+.heart:nth-child(1) {
+  left: 10%;
+  top: 20%;
+  animation-delay: 0s;
+}
+
+.heart:nth-child(2) {
+  left: 80%;
+  top: 70%;
+  animation-delay: 2s;
+}
+
+.heart:nth-child(3) {
+  left: 30%;
+  top: 80%;
+  animation-delay: 4s;
+}
+
+.heart:nth-child(4) {
+  left: 70%;
+  top: 30%;
+  animation-delay: 1s;
+}
+
+@keyframes float {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(-20px); }
+}
+
+/* The white card */
+.login-box {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 380px;
+  max-width: 95vw;
+  z-index: 10;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Titles and text */
+.login-title {
+  text-align: center;
+  color: #f5576c;
+  margin-bottom: 10px;
+  font-size: 26px;
+}
+
+.login-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+/* Inputs */
+.input-group {
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  display: block;
+  color: #333;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #f093fb;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: all 0.3s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #f5576c;
+  box-shadow: 0 0 10px rgba(245, 87, 108, 0.3);
+}
+
+/* Button */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 4px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.login-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(245, 87, 108, 0.5);
+}
+
+/* Error and hint */
+.error-message {
+  color: #f5576c;
+  text-align: center;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.hint {
+  text-align: center;
+  color: #999;
+  margin-top: 12px;
+  font-size: 11px;
+}
+
+/* Simple responsiveness */
+@media (max-width: 600px) {
+  .login-box {
+    padding: 28px 22px;
+  }
+
+  .login-title {
+    font-size: 22px;
+  }
+}
