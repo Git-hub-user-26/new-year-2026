@@ -10,7 +10,7 @@ function Countdown() {
   const [showVideo, setShowVideo] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
   const videoRef = useRef(null);
-  const targetRef = useRef(new Date('2026-01-01T16:59:00'));
+  const targetRef = useRef(new Date('2026-01-01T17:04:00'));
 
   // YOUR VIDEO URL HERE
   const VIDEO_URL = '/media/WhatsApp Video 2025-12-31 at 23.37.27.mp4';
@@ -31,8 +31,15 @@ function Countdown() {
         setShowFireworks(false);
         setShowVideo(false);
       } else {
+        // At target: mark event and show video immediately (do not wait for fireworks)
         setIsNewYear(true);
-        setTimeout(() => setShowFireworks(true), 500);
+        setShowFireworks(false);
+        setShowVideo(true);
+        setTimeout(() => {
+          if (videoRef.current) {
+            videoRef.current.play().catch(e => console.log('Autoplay failed:', e));
+          }
+        }, 200);
       }
     };
 
