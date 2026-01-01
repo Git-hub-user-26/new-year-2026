@@ -16,7 +16,7 @@ function Countdown() {
   const targetRef = useRef(new Date('2026-01-01T17:41:00'));
 
   // IMPORTANT: Place video file in 'public/media/' folder
-  const VIDEO_URL = '/media/WhatsApp Video 2025-12-31 at 23.37.27.mp4';
+  const VIDEO_URL = '/media/dv.mp4';
 
   useEffect(() => {
     const calculateTimeLeft = () => {
