@@ -10,6 +10,7 @@ function Countdown() {
   const [showVideo, setShowVideo] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
   const videoRef = useRef(null);
+  const targetRef = useRef(new Date(Date.now() + 10 * 60 * 1000));
 
   // YOUR VIDEO URL HERE
   const VIDEO_URL = '/media/your-romantic-video.mp4';
@@ -17,8 +18,7 @@ function Countdown() {
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
-      const newYear = new Date('2026-01-01T00:00:00');
-      const difference = newYear - now;
+      const difference = targetRef.current - now;
 
       if (difference > 0) {
         setTimeLeft({
@@ -77,7 +77,7 @@ function Countdown() {
         <div className="countdown-content">
           <div className="title-container">
             <h1 className="countdown-title">
-              <span className="emoji">🎊</span> New Year 2026 Countdown <span className="emoji">🎊</span>
+              <span className="emoji">🎊</span> 10-Minute Countdown <span className="emoji">🎊</span>
             </h1>
             <p className="countdown-subtitle">
               Just moments away from our magical celebration together! 💕✨
