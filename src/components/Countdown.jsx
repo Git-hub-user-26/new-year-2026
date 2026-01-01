@@ -234,3 +234,9 @@ function Countdown() {
 }
 
 export default Countdown;
+{showVideo && (
+  <div onClick={() => videoRef.current.play()}>
+    <p>🎥 Tap to play your New Year video! 💕</p>
+    <video ref={videoRef} src="/media/dv.mp4" muted playsInline />
+  </div>
+)}
