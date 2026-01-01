@@ -10,7 +10,7 @@ function Countdown() {
   const [showVideo, setShowVideo] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
   const videoRef = useRef(null);
-  const targetRef = useRef(new Date(Date.now() + 10 * 60 * 1000));
+  const targetRef = useRef(new Date('2026-01-01T16:52:00'));
 
   // YOUR VIDEO URL HERE
   const VIDEO_URL = '/media/WhatsApp Video 2025-12-31 at 23.37.27.mp4';
@@ -32,7 +32,13 @@ function Countdown() {
         setShowVideo(false);
       } else {
         setIsNewYear(true);
-        setTimeout(() => setShowFireworks(true), 500);
+        setShowFireworks(false);
+        setShowVideo(true);
+        setTimeout(() => {
+          if (videoRef.current) {
+            videoRef.current.play().catch(e => console.log('Autoplay failed:', e));
+          }
+        }, 200);
       }
     };
 
@@ -55,7 +61,12 @@ function Countdown() {
 
   const handleUserInteraction = () => {
     setUserInteracted(true);
-    if (videoRef.current && showVideo) {
+    if (videoRef.current) {
+      try {
+        videoRef.current.muted = false;
+      } catch (e) {
+        console.log('Failed to unmute:', e);
+      }
       videoRef.current.play().catch(e => console.log('Video play failed:', e));
     }
   };
@@ -150,7 +161,7 @@ function Countdown() {
             src={VIDEO_URL}
             autoPlay
             loop
-            muted={!userInteracted}
+            muted={true}
             playsInline
             className="celebration-video"
           />
