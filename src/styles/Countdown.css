@@ -439,3 +439,168 @@
     font-size: clamp(36px, 12vw, 60px);
   }
 }
+
+/* NEW ANIMATIONS FOR ENHANCED COUNTDOWN.JSX */
+
+/* Fade-in animation for smooth entrance */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in;
+}
+
+/* Pulse animations */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse-fast {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.pulse-fast {
+  animation: pulse-fast 0.6s infinite;
+}
+
+/* Slide-in animation */
+@keyframes slideIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.slide-in {
+  animation: slideIn 0.8s ease-out;
+}
+
+/* Scale animations */
+@keyframes scale {
+  0%, 100% { transform: scale(0.9); }
+  50% { transform: scale(1.15); }
+}
+
+.scale {
+  animation: scale 1.5s infinite;
+}
+
+.scale-in {
+  animation: scale 0.5s ease-out;
+}
+
+/* Glow effect for numbers */
+.glow {
+  text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff69b4;
+}
+
+/* Floating hearts */
+.floating-heart {
+  position: absolute;
+  font-size: 24px;
+  animation: floatHeart 5s ease-in-out infinite;
+  z-index: 10;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+@keyframes floatHeart {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-30px) rotate(5deg); }
+  50% { transform: translateY(-15px) rotate(-5deg); }
+  75% { transform: translateY(-40px) rotate(3deg); }
+}
+
+.floating-heart.heart-1 {
+  top: 15%;
+  left: 8%;
+  animation-delay: 0s;
+  font-size: 28px;
+}
+
+.floating-heart.heart-2 {
+  top: 55%;
+  right: 12%;
+  animation-delay: 1.5s;
+  color: #ff69b4;
+  font-size: 22px;
+}
+
+.floating-heart.heart-3 {
+  top: 25%;
+  right: 18%;
+  animation-delay: 3s;
+  font-size: 26px;
+  color: #ffd700;
+}
+
+/* Confetti burst effect */
+.confetti-burst {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle, #ff0055 2px, transparent 2px),
+    radial-gradient(circle, #ffd700 2px, transparent 2px),
+    radial-gradient(circle, #00ffaa 2px, transparent 2px),
+    radial-gradient(circle, #00ccff 2px, transparent 2px),
+    radial-gradient(circle, #ff69b4 2px, transparent 2px);
+  background-size: 50px 50px, 80px 80px, 60px 60px, 90px 90px, 70px 70px;
+  background-position: 0 0, 20px 20px, 40px 40px, 10px 30px, 50px 10px;
+  animation: confettiFall 3s linear;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+@keyframes confettiFall {
+  0% { 
+    transform: translateY(-100%) rotate(0deg); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: translateY(100vh) rotate(720deg); 
+    opacity: 0; 
+  }
+}
+
+/* Enhanced responsive for new elements */
+@media (max-width: 768px) {
+  .floating-heart {
+    font-size: 18px;
+  }
+  
+  .floating-heart.heart-1 {
+    font-size: 20px;
+  }
+  
+  .floating-heart.heart-2 {
+    font-size: 16px;
+  }
+  
+  .floating-heart.heart-3 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .celebration-badge {
+    font-size: 80px;
+  }
+  
+  .heart-pulse {
+    font-size: 60px;
+  }
+  
+  .video-overlay {
+    padding: 30px 20px;
+  }
+}
