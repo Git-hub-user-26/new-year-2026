@@ -19,6 +19,7 @@ function Login({ setAuth }) {
     const valid = CREDENTIALS.some(c => c.username === username && c.password === password);
     if (valid) {
       setAuth(true);
+      try { localStorage.setItem('isAuthenticated', 'true'); } catch (e) {}
       navigate('/home');
     } else {
       setError('Invalid credentials! Try again 💕');
