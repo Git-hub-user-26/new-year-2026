@@ -10,7 +10,7 @@ function Countdown() {
   const [showVideo, setShowVideo] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
   const videoRef = useRef(null);
-  const targetRef = useRef(new Date('2026-01-01T16:52:00'));
+  const targetRef = useRef(new Date('2026-01-01T16:59:00'));
 
   // YOUR VIDEO URL HERE
   const VIDEO_URL = '/media/WhatsApp Video 2025-12-31 at 23.37.27.mp4';
