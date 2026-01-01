@@ -11,8 +11,9 @@ function Countdown() {
   const [userInteracted, setUserInteracted] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const videoRef = useRef(null);
-  // Updated to end at 17:44 IST (5:44 PM)
-  const targetRef = useRef(new Date('2026-01-01T17:44:00'));
+  const fireworksTimerRef = useRef(null);
+  // Updated to end at 17:48 IST (5:48 PM)
+  const targetRef = useRef(new Date('2026-01-01T17:48:00'));
 
   // YOUR VIDEO URL HERE - Update to public URL if needed
   const VIDEO_URL = '/media/WhatsApp Video 2025-12-31 at 23.37.27.mp4';
@@ -33,31 +34,46 @@ function Countdown() {
         setShowFireworks(false);
         setShowVideo(false);
         setShowConfetti(false);
-      } else {
+      } else if (!isNewYear) {
         // Trigger sequence: fireworks → 5s delay → video
         setIsNewYear(true);
         setShowFireworks(true);
+        setShowVideo(false);
+        
         // Brief confetti burst on zero
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 2000);
+
+        // End fireworks after 8 seconds, then wait 5 more seconds before video
+        fireworksTimerRef.current = setTimeout(() => {
+          setShowFireworks(false);
+          
+          // Wait 5 seconds after fireworks end, then show video
+          setTimeout(() => {
+            setShowVideo(true);
+            // Attempt autoplay after slight delay
+            setTimeout(() => {
+              if (videoRef.current) {
+                videoRef.current.play().catch(e => {
+                  console.log('Autoplay failed (user interaction needed):', e);
+                });
+              }
+            }, 300);
+          }, 5000);
+        }, 8000);
       }
     };
 
     calculateTimeLeft();
     const timer = setInterval(calculateTimeLeft, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const handleFireworksEnd = () => {
-    setShowFireworks(false);
-    // Exactly 5s after fireworks end → show/play video muted
-    setTimeout(() => {
-      setShowVideo(true);
-      if (videoRef.current) {
-        videoRef.current.play().catch(e => console.log('Autoplay failed:', e));
+    
+    return () => {
+      clearInterval(timer);
+      if (fireworksTimerRef.current) {
+        clearTimeout(fireworksTimerRef.current);
       }
-    }, 5000);
-  };
+    };
+  }, [isNewYear]);
 
   const handleUserInteraction = () => {
     setUserInteracted(true);
@@ -143,7 +159,6 @@ function Countdown() {
               wind: { x: 0.2, y: 0.5 }
             }}
             style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 9999 }}
-            onFinish={handleFireworksEnd}
           />
           {showConfetti && <div className="confetti-burst"></div>}
           <div className="fireworks-overlay fade-in">
@@ -153,7 +168,7 @@ function Countdown() {
           </div>
         </div>
       ) : showVideo ? (
-        <div className="video-fullscreen">
+        <div className="video-fullscreen fade-in">
           <video
             ref={videoRef}
             src={VIDEO_URL}
