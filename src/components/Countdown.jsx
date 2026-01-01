@@ -32,13 +32,7 @@ function Countdown() {
         setShowVideo(false);
       } else {
         setIsNewYear(true);
-        setShowFireworks(false);
-        setShowVideo(true);
-        setTimeout(() => {
-          if (videoRef.current) {
-            videoRef.current.play().catch(e => console.log('Autoplay failed:', e));
-          }
-        }, 200);
+        setTimeout(() => setShowFireworks(true), 500);
       }
     };
 
@@ -49,14 +43,15 @@ function Countdown() {
 
   const handleFireworksEnd = () => {
     setShowFireworks(false);
+    // Wait ~7 seconds after fireworks finish, then show video and attempt autoplay (muted)
     setTimeout(() => {
       setShowVideo(true);
       setTimeout(() => {
-        if (videoRef.current && userInteracted) {
-          videoRef.current.play();
+        if (videoRef.current) {
+          videoRef.current.play().catch(e => console.log('Autoplay failed:', e));
         }
       }, 500);
-    }, 2000);
+    }, 7000);
   };
 
   const handleUserInteraction = () => {
