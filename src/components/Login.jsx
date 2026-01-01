@@ -11,7 +11,7 @@ function Login({ setAuth }) {
   // Allowed login credentials
   const CREDENTIALS = [
     { username: 'DumbDoremon', password: 'DvGn1408' },
-    { username: 'Gargi', password: '3008' }
+    { username: 'Dv', password: '1408' }
   ];
 
   const handleSubmit = (e) => {
