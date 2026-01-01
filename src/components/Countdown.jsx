@@ -10,12 +10,12 @@ function Countdown() {
   const [showVideo, setShowVideo] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [videoError, setVideoError] = useState('');
   const videoRef = useRef(null);
   const fireworksTimerRef = useRef(null);
-  // Updated to end at 17:48 IST (5:48 PM)
-  const targetRef = useRef(new Date('2026-01-01T17:48:00'));
+  const targetRef = useRef(new Date('2026-01-01T17:41:00'));
 
-  // YOUR VIDEO URL HERE - Update to public URL if needed
+  // IMPORTANT: Place video file in 'public/media/' folder
   const VIDEO_URL = '/media/WhatsApp Video 2025-12-31 at 23.37.27.mp4';
 
   useEffect(() => {
@@ -35,30 +35,22 @@ function Countdown() {
         setShowVideo(false);
         setShowConfetti(false);
       } else if (!isNewYear) {
-        // Trigger sequence: fireworks → 5s delay → video
+        console.log('🎉 COUNTDOWN ZERO - Starting celebration sequence');
         setIsNewYear(true);
         setShowFireworks(true);
         setShowVideo(false);
         
-        // Brief confetti burst on zero
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 2000);
 
-        // End fireworks after 8 seconds, then wait 5 more seconds before video
+        // Fireworks for 8s, then 5s pause, then video
         fireworksTimerRef.current = setTimeout(() => {
+          console.log('🎆 Fireworks ending, waiting 5s for video...');
           setShowFireworks(false);
           
-          // Wait 5 seconds after fireworks end, then show video
           setTimeout(() => {
+            console.log('📹 Attempting to show video...');
             setShowVideo(true);
-            // Attempt autoplay after slight delay
-            setTimeout(() => {
-              if (videoRef.current) {
-                videoRef.current.play().catch(e => {
-                  console.log('Autoplay failed (user interaction needed):', e);
-                });
-              }
-            }, 300);
           }, 5000);
         }, 8000);
       }
@@ -69,27 +61,66 @@ function Countdown() {
     
     return () => {
       clearInterval(timer);
-      if (fireworksTimerRef.current) {
-        clearTimeout(fireworksTimerRef.current);
-      }
+      if (fireworksTimerRef.current) clearTimeout(fireworksTimerRef.current);
     };
   }, [isNewYear]);
 
+  // Separate effect to play video when it becomes visible
+  useEffect(() => {
+    if (showVideo && videoRef.current) {
+      console.log('📹 Video element rendered, attempting playback...');
+      console.log('Video src:', videoRef.current.src);
+      
+      const playVideo = async () => {
+        try {
+          // Force load the video first
+          videoRef.current.load();
+          
+          // Wait a bit for loading
+          await new Promise(resolve => setTimeout(resolve, 500));
+          
+          // Attempt play
+          await videoRef.current.play();
+          console.log('✅ Video playing successfully!');
+        } catch (error) {
+          console.error('❌ Video play failed:', error);
+          setVideoError(`Playback error: ${error.message}. Click anywhere to play.`);
+        }
+      };
+      
+      playVideo();
+    }
+  }, [showVideo]);
+
   const handleUserInteraction = () => {
-    setUserInteracted(true);
-    if (videoRef.current) {
+    console.log('👆 User clicked - attempting to play/unmute video');
+    
+    if (videoRef.current && showVideo) {
+      setUserInteracted(true);
+      
       try {
         videoRef.current.muted = false;
+        console.log('🔊 Video unmuted');
       } catch (e) {
-        console.log('Failed to unmute:', e);
+        console.error('Failed to unmute:', e);
       }
-      videoRef.current.play().catch(e => console.log('Video play failed:', e));
+      
+      videoRef.current.play()
+        .then(() => console.log('✅ Video playing with sound'))
+        .catch(e => {
+          console.error('❌ Play failed:', e);
+          setVideoError('Unable to play video. Check console for details.');
+        });
     }
+  };
+
+  const handleVideoError = (e) => {
+    console.error('❌ Video error event:', e.target.error);
+    setVideoError(`Video load error. Check if file exists at: ${VIDEO_URL}`);
   };
 
   return (
     <div className="countdown-container" onClick={handleUserInteraction}>
-      {/* Enhanced floating particles + animated hearts */}
       <div className="particles-bg">
         <div className="particle particle-1"></div>
         <div className="particle particle-2"></div>
@@ -102,6 +133,10 @@ function Countdown() {
       </div>
 
       <Link to="/home" className="back-btn">← Back to Home</Link>
+      {/* Add this after back button for testing */}
+      <button onClick={() => setShowVideo(true)} style={{position:'fixed',top:'100px',left:'20px',zIndex:999}}>
+        TEST VIDEO
+      </button>
       
       {!isNewYear ? (
         <div className="countdown-content fade-in">
@@ -176,12 +211,20 @@ function Countdown() {
             loop
             muted={true}
             playsInline
+            preload="auto"
             className="celebration-video"
+            onError={handleVideoError}
+            onLoadedData={() => console.log('📹 Video loaded successfully')}
           />
           {!userInteracted && (
             <div className="video-overlay pulse">
               <div className="heart-pulse">💕</div>
               <h2>Click anywhere to unlock our special message 💕</h2>
+              {videoError && (
+                <p style={{color: '#ff6b6b', fontSize: '14px', marginTop: '10px'}}>
+                  {videoError}
+                </p>
+              )}
             </div>
           )}
         </div>
