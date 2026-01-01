@@ -13,7 +13,7 @@ function Countdown() {
   const targetRef = useRef(new Date(Date.now() + 10 * 60 * 1000));
 
   // YOUR VIDEO URL HERE
-  const VIDEO_URL = '/media/your-romantic-video.mp4';
+  const VIDEO_URL = '/media/WhatsApp Video 2025-12-31 at 23.37.27.mp4';
 
   useEffect(() => {
     const calculateTimeLeft = () => {
